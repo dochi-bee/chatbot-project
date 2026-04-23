@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Cybersecurity Chatbot</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #1f4037, #99f2c8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .chat-container {
+            width: 400px;
+            height: 550px;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0,0,0,0.3);
+        }
+
+        .header {
+            background: #075e54;
+            color: white;
+            padding: 15px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .chatbox {
+            flex: 1;
+            padding: 10px;
+            overflow-y: auto;
+            background: #e5ddd5;
+        }
+
+        .message {
+            margin: 10px;
+            padding: 10px;
+            border-radius: 10px;
+            max-width: 70%;
+        }
+
+        .user {
+            background: #dcf8c6;
+            margin-left: auto;
+        }
+
+        .bot {
+            background: white;
+            margin-right: auto;
+        }
+
+        .input-area {
+            display: flex;
+            padding: 10px;
+            background: #f0f0f0;
+        }
+
+        input {
+            flex: 1;
+            padding: 10px;
+            border-radius: 20px;
+            border: 1px solid #ccc;
+            outline: none;
+        }
+
+        button {
+            margin-left: 5px;
+            padding: 10px;
+            border: none;
+            background: #075e54;
+            color: white;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .typing {
+            font-style: italic;
+            color: gray;
+            margin: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="chat-container">
+    <div class="header">Cybersecurity Chatbot 🤖</div>
+
+    <div class="chatbox" id="chatbox"></div>
+
+    <div class="input-area">
+        <input type="text" id="userInput" placeholder="Type or speak...">
+        <button onclick="sendMessage()">➤</button>
+        <button onclick="startVoice()">🎤</button>
+    </div>
+</div>
+
+<script>
+function addMessage(text, type) {
+    let chatbox = document.getElementById("chatbox");
+    let msg = document.createElement("div");
+    msg.className = "message " + type;
+    msg.innerText = text;
+    chatbox.appendChild(msg);
+    chatbox.scrollTop = chatbox.scrollHeight;
+}
+
+function sendMessage() {
+    let inputField = document.getElementById("userInput");
+    let input = inputField.value;
+
+    if (input.trim() === "") return;
+
+    addMessage(input, "user");
+    inputField.value = "";
+
+    let chatbox = document.getElementById("chatbox");
+
+    // typing indicator
+    let typing = document.createElement("div");
+    typing.className = "typing";
+    typing.innerText = "Bot is typing...";
+    chatbox.appendChild(typing);
+
+    fetch("/chat", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({ message: input })
+    })
+    .then(res => res.json())
+    .then(data => {
+        chatbox.removeChild(typing);
+        addMessage(data.response, "bot");
+    });
+}
+
+// ENTER KEY
+document.getElementById("userInput").addEventListener("keypress", function(e) {
+    if (e.key === "Enter") sendMessage();
+});
+
+// 🎤 SPEECH RECOGNITION (WEB)
+function startVoice() {
+    if (!('webkitSpeechRecognition' in window)) {
+        alert("Speech recognition not supported in this browser.");
+        return;
+    }
+
+    let recognition = new webkitSpeechRecognition();
+    recognition.lang = "en-US";
+
+    recognition.start();
+
+    recognition.onresult = function(event) {
+        let speechText = event.results[0][0].transcript;
+        document.getElementById("userInput").value = speechText;
+        sendMessage();
+    };
+}
+</script>
+
+</body>
+</html>
