@@ -1,7 +1,7 @@
 from nltk.chat.util import Chat, reflections
 
 pairs = [
-    [r"hi|hello|hey", ["Hello! I'm Kira the Cybersecurity departmentchatbot."]],
+    [r"hi|hello|hey", ["Hello! I'm Kira the Cybersecurity department chatbot."]],
 
     [r"what is your name?",
      ["I am Kira and I can be your friend.", "You can call me Kira."]],
