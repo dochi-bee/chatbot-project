@@ -1,38 +1,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Student Meal Planner Bot 🍲</title>
+    <title>Ramsay The Meal Bot🍲</title>
 
     <style>
         body {
             margin: 0;
-            font-family: Arial;
+            font-family: 'Segoe UI', sans-serif;
             display: flex;
             height: 100vh;
+            background: #fff7ed;
         }
 
         /* Sidebar */
         .sidebar {
-            width: 250px;
-            background: #065f46;
+            width: 260px;
+            background: #ea580c;
             color: white;
-            padding: 15px;
+            padding: 20px;
         }
 
-        .sidebar h3 {
-            margin-bottom: 10px;
+        .sidebar h2 {
+            margin-bottom: 15px;
         }
 
         .suggestion {
-            background: #047857;
-            padding: 8px;
-            margin: 5px 0;
-            border-radius: 5px;
+            background: rgba(255,255,255,0.2);
+            padding: 10px;
+            margin: 8px 0;
+            border-radius: 10px;
             cursor: pointer;
+            transition: 0.3s;
         }
 
         .suggestion:hover {
-            background: #059669;
+            background: rgba(255,255,255,0.35);
+            transform: scale(1.03);
         }
 
         /* Chat Area */
@@ -40,59 +43,71 @@
             flex: 1;
             display: flex;
             flex-direction: column;
-            background: #ecfdf5;
         }
 
         .header {
-            background: #065f46;
-            color: white;
+            background: #fb923c;
             padding: 15px;
+            font-size: 18px;
             font-weight: bold;
+            color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
         .chatbox {
             flex: 1;
-            padding: 15px;
+            padding: 20px;
             overflow-y: auto;
+            display: flex;
+            flex-direction: column;
         }
 
         .message {
-            margin: 10px 0;
-            padding: 10px;
-            border-radius: 10px;
+            padding: 12px;
+            margin: 8px 0;
+            border-radius: 15px;
             max-width: 60%;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
         .user {
-            background: #10b981;
-            color: white;
-            margin-left: auto;
+            background: #fdba74;
+            align-self: flex-end;
         }
 
         .bot {
-            background: #d1fae5;
+            background: #ffffff;
+            align-self: flex-start;
         }
 
         .input-area {
             display: flex;
-            padding: 10px;
-            background: white;
+            padding: 15px;
+            background: #fff;
+            border-top: 1px solid #eee;
         }
 
         input {
             flex: 1;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
+            padding: 12px;
+            border-radius: 25px;
+            border: 1px solid #ddd;
+            outline: none;
         }
 
         button {
-            margin-left: 5px;
-            padding: 10px;
+            margin-left: 10px;
+            padding: 12px;
             border: none;
-            background: #065f46;
+            border-radius: 50%;
+            background: #ea580c;
             color: white;
             cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #c2410c;
         }
     </style>
 </head>
@@ -101,39 +116,25 @@
 
 <!-- Sidebar -->
 <div class="sidebar">
-    <h3>🍲 Try asking:</h3>
+    <h2>🍲 Meal Ideas</h2>
 
-    <div class="suggestion" onclick="quickAsk('cheap meals')">
-        Cheap meals
-    </div>
-
-    <div class="suggestion" onclick="quickAsk('breakfast ideas')">
-        Breakfast ideas
-    </div>
-
-    <div class="suggestion" onclick="quickAsk('weekly meal plan')">
-        Weekly meal plan
-    </div>
-
-    <div class="suggestion" onclick="quickAsk('i am broke what can i eat')">
-        I'm broke😭 what can I eat?
-    </div>
-
-    <div class="suggestion" onclick="quickAsk('healthy food')">
-        Healthy food options
-    </div>
+    <div class="suggestion" onclick="quickAsk('cheap meals')">Cheap meals</div>
+    <div class="suggestion" onclick="quickAsk('breakfast ideas')">Breakfast ideas</div>
+    <div class="suggestion" onclick="quickAsk('weekly meal plan')">Weekly meal plan</div>
+    <div class="suggestion" onclick="quickAsk('i am broke what can i eat')">I'm broke 😭</div>
+    <div class="suggestion" onclick="quickAsk('healthy food')">Healthy food</div>
 </div>
 
-<!-- Chat Area -->
+<!-- Chat -->
 <div class="chat-container">
 
-    <div class="header">Student Meal Planner Bot 🍲</div>
+    <div class="header">🍲 Ramsay The Meal Planner Bot</div>
 
     <div class="chatbox" id="chatbox"></div>
 
     <div class="input-area">
-        <input type="text" id="userInput" placeholder="Type or speak...">
-        <button onclick="sendMessage()">Send</button>
+        <input type="text" id="userInput" placeholder="Ask about meals...">
+        <button onclick="sendMessage()">➤</button>
         <button onclick="startVoice()">🎤</button>
     </div>
 
@@ -142,9 +143,11 @@
 <script>
 function addMessage(text, type) {
     let chatbox = document.getElementById("chatbox");
+
     let msg = document.createElement("div");
     msg.className = "message " + type;
     msg.innerText = text;
+
     chatbox.appendChild(msg);
     chatbox.scrollTop = chatbox.scrollHeight;
 }
@@ -171,15 +174,14 @@ function quickAsk(text) {
     sendMessage();
 }
 
-// ENTER KEY
 document.getElementById("userInput").addEventListener("keypress", function(e) {
     if (e.key === "Enter") sendMessage();
 });
 
-// VOICE
+// Voice
 function startVoice() {
     if (!('webkitSpeechRecognition' in window)) {
-        alert("Speech not supported here.");
+        alert("Voice not supported here.");
         return;
     }
 
