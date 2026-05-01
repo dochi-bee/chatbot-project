@@ -34,12 +34,12 @@ pairs = [
     ]],
 
     # Weekly Plan
-    [r"meal plan|weekly plan", [
+    [r"meal plan|weekly meal plan", [
         "Monday: Rice\nTuesday: Beans\nWednesday: Noodles\nThursday: Yam\nFriday: Jollof Rice\nWeekend: Flexible meals"
     ]],
 
     # No Money
-    [r"no money|broke", [
+    [r"no money|I'm broke", [
         "You can take garri and groundnut or soak garri.",
         "Very low budget? Try pap or plain noodles."
     ]],
