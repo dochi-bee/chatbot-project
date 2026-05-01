@@ -1,54 +1,87 @@
 from nltk.chat.util import Chat, reflections
 
 pairs = [
-    [r"hi|hello|hey", ["Hello! I'm Kira the Cybersecurity department chatbot."]],
 
-    [r"what is your name?",
-     ["I am Kira and I can be your friend.", "You can call me Kira."]],
-    
-    [r".*help.*", ["I can assist you with school-related questions."]],
-    
-    [r"who is the hod", ["The HOD is Prof. Engr O.J. Onojo."]],
+    # Greetings
+    [r"hi|hello|hey", ["Hi! I'm Ramsay your Student Meal Planner Bot 🍲"]],
+    [r"how are you", ["I'm good! Ready to help you plan affordable meals"]],
 
-    [r"what is cybersecurity", ["Cybersecurity involves protecting systems, networks, and data from cyber attacks."]],
+    # General Help
+    [r".*help.*", ["I can suggest cheap meals, meal plans, and student friendly food ideas."]],
 
-    [r"why study cybersecurity", ["Cybersecurity is important for protecting digital information and systems."]],
+    # Cheap Meals
+    [r"cheap meals|budget meals", [
+        "You can try garri and groundnut, rice and beans, or noodles with vegetables.",
+        "Budget meals include yam and palm oil, pap and akara, or beans porridge."
+    ]],
 
-    [r"courses in cybersecurity", ["Courses include network security, ethical hacking, cryptography and many others."]], 
+    # Breakfast
+    [r"breakfast", [
+        "Try pap and akara, bread and tea, or custard with milk.",
+        "Simple breakfast: bread and butter or soaked garri."
+    ]],
 
-    [r"how are you?",
-     ["I'm functioning perfectly!", "All systems are running well."]],
-    
-    [r"exam timetable", ["Check the SUG notice board for the exam timetable towards the end of semester."]],
+    # Lunch
+    [r"lunch", [
+        "You can eat rice and stew, beans, or noodles with vegetables.",
+        "Try yam porridge or jollof rice for lunch."
+    ]],
 
-    [r"results", ["Results are usually released on the school portal or through your course adviser."]],
+    # Dinner
+    [r"dinner", [
+        "Light dinner ideas: pap, noodles, or beans.",
+        "You can try rice and vegetables or yam."
+    ]],
 
-    [r"hostel", ["Hostel allocation is handled by the student affairs division."]],
+    # Weekly Plan
+    [r"meal plan|weekly plan", [
+        "Monday: Rice\nTuesday: Beans\nWednesday: Noodles\nThursday: Yam\nFriday: Jollof Rice\nWeekend: Flexible meals"
+    ]],
 
-    [r"library", ["The library is open during school hours (refer to handbook) for study and research."]],
+    # No Money
+    [r"no money|broke", [
+        "You can take garri and groundnut or soak garri.",
+        "Very low budget? Try pap or plain noodles."
+    ]],
 
-    [r"wifi|internet", ["Campus WiFi is available in designated areas."]],
+    # Protein Options
+    [r"protein", [
+        "Beans, groundnuts, eggs and milk are good affordable protein sources.",
+        "Try beans or moi moi for protein."
+    ]],
 
-    [r"gpa|cgpa", ["Your GPA is calculated based on your course grades."]],
+    # Snacks
+    [r"snacks", [
+        "You can snack on groundnuts, peanuts, chin chin, or fruits.",
+        "Try popcorn or biscuits."
+    ]],
 
-    [r"where is the research center", ["The research center is located in SICT faculty."]],
-    
-    [r" how do I register courses", ["You can register courses on the school portal."]],
+    # Cooking Tips
+    [r"quick food|fast meal", [
+        "Noodles and egg-free sauces are very quick.",
+        "You can prepare garri instantly."
+    ]],
 
-    [r"what is hacking", ["Hacking is the act of exploiting systems, either ethically or maliciously."]],
+    # Healthy Eating
+    [r"healthy food", [
+        "Try beans, vegetables, and fruits for balanced meals.",
+        "Avoid too much oil and eat more vegetables."
+    ]],
 
-    [r"ethical hacking", ["Ethical hacking involves testing systems to find vulnerabilities legally."]],
+    # No Eggs (Important for you)
+    [r"egg", [
+        "If you don't eat eggs, you can use beans, fish, or milk as alternatives."
+    ]],
 
-    [r"malware", ["Malware is malicious software designed to harm systems."]],
+    # Thanks
+    [r"thank you|thanks", ["You're welcome😊", "Glad I could help!"]],
 
-    [r"phishing", ["Phishing is a cyber attack that tricks users into revealing sensitive information."]],
+    # Goodbye
+    [r"bye", ["Goodbye! Eat well and stay healthy 🍲"]],
 
-    [r"firewall", ["A firewall protects networks by filtering incoming and outgoing traffic."]],
+    # Catch-all
+    [r"(.*)", ["Hmm, I don't have that yet. Try asking about meals, budget food, or meal plans"]]
 
-    [r"thank you|thanks", ["You're welcome!", "Glad I could help!"]],
-
-    
-    [r"bye", ["Goodbye! See you later."]]
 ]
 
 chatbot = Chat(pairs, reflections)
@@ -56,5 +89,5 @@ chatbot = Chat(pairs, reflections)
 def get_response(user_input):
     response = chatbot.respond(user_input)
     if response is None:
-        return "Sorry, I don't understand that yet."
+        return "Sorry, I didn't understand that."
     return response
